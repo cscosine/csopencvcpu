@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.venv/
+*.egg-info/
+
+# coverage artifacts
+htmlcov/
+.coverage
+.coverage.*
+coverage*.xml
+
+# workspace for csorchestrator
+workspace/
