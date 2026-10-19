@@ -12,14 +12,13 @@ from csorchestrator.application.recipes.create_orchestrator import (
 from csorchestrator.domain.context.context_os_architecture import OS, UBUNTU_STRING_PREFIX
 from csorchestrator.foundation.core.report import Report
 from csorchestrator.frontend.cscmake_presets.supported_variants import BuildConfig
-from csorchestrator.frontend.local_execution.step_utils import StepExecuteOnlyOn, StepGithubIfAlways
+from csorchestrator.frontend.local_execution.step_utils import StepExecuteOnlyOn
 from csorchestrator.frontend.step.step_cmake_command import (
     StepCMakeWorkflow,
     StepCMakeWorkflowGithubExtraCommandsPrefix,
     StepCMakeWorkflowGithubPowershell,
 )
 from csorchestrator.frontend.step.step_get_precompiled_lib_github import identity_mapping_function
-from csorchestrator.frontend.step.step_github_action import StepAddGitHubAction
 from csorchestrator.portable.package_version import PackageVersion
 
 from csopencvcpu_config import install_csopencvcpu_build_dependencies
@@ -48,9 +47,6 @@ WINDOWS_CMAKE_PREFIX_CLEANUP_CMD = [
 
 def create_orchestrator() -> OptionalOrchestratorWithReport:
     report = Report()
-
-    # set to True to upload the build tree as an artifact for debugging purposes
-    flag_debug_upload_build_tree = False
 
     base_target_dir = Path("workspace")
     base_install_dir = base_target_dir / Path("install")
@@ -119,23 +115,6 @@ def create_orchestrator() -> OptionalOrchestratorWithReport:
         .add_extra(StepCMakeWorkflowGithubPowershell())
         .add_extra(StepCMakeWorkflowGithubExtraCommandsPrefix(cmd=WINDOWS_CMAKE_PREFIX_CLEANUP_CMD))
     )
-
-    if flag_debug_upload_build_tree:
-        report.append_warning(
-            "Debug flag 'flag_debug_upload_build_tree' is set to True, the build tree will be uploaded as an artifact."
-        )
-        p.add_step(
-            StepAddGitHubAction(
-                name="Upload build tree",
-                description="Upload build tree",
-                uses="actions/upload-artifact@v7",
-                with_list={
-                    "name": "build-tree",
-                    "path": "workspace/build",
-                    "if-no-files-found": "warn",
-                },
-            ).add_extra(StepGithubIfAlways())
-        )
 
     # ----------------------------------------------------------------
     create_and_upload_artifacts(

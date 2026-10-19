@@ -18,8 +18,6 @@ numpy) and downloads the precompiled build dependencies (eigen3) via the
 standard provider mechanism. It is called by `csopencvcpu_project.py`
 (producer) and by `auto_install_csorchestrator_managed_libraries()`
 (consumers pulling the precompiled OpenCV archives);
-- `opencv_mapping()`: maps a consumer execution context to the context the
-OpenCV archives are built with.
 """
 
 from copy import deepcopy
@@ -38,6 +36,7 @@ from csorchestrator.domain.context.context_compiler_generator import (
 from csorchestrator.domain.context.context_os_architecture import (
     OS,
     UBUNTU_STRING_PREFIX,
+    UbuntuVersions,
 )
 from csorchestrator.domain.context.context_os_architecture_compiler_generator import (
     ContextOsArchitectureCompilerGenerator,
@@ -47,6 +46,7 @@ from csorchestrator.foundation.core.report import Report
 from csorchestrator.frontend.local_execution.step_utils import (
     StepExecuteOnlyOn,
     StepExecuteOnlyOncePerMatrix,
+    StepSkipExecutionOnLocal,
 )
 from csorchestrator.frontend.step.step_custom_command import (
     StepBashScriptCommand,
@@ -258,20 +258,24 @@ def install_csopencvcpu_build_dependencies(
         .add_extra(StepExecuteOnlyOn(os=OS.LINUX, version_starts_with=UBUNTU_STRING_PREFIX))
     )
 
-    #     p.add_step(
-    #         StepBashScriptCommand(
-    #             name="Remove libunwind (Ubuntu 22.04)",
-    #             description="remove libunwind -dev packages causing errors on ubuntu 22.04",
-    #             cmd=_REMOVE_LIBUNWIND_SCRIPT_LINUX.strip().splitlines(),
-    #         )
-    #         .add_extra(StepExecuteOnlyOncePerMatrix())
-    #         .add_extra(
-    #             StepExecuteOnlyOn(
-    #                 os=OS.LINUX,
-    #                 version_starts_with=UbuntuVersions.UBUNTU_22_04.value,
-    #             )
-    #         )
-    #     )
+    p.add_step(
+        StepBashScriptCommand(
+            name="Remove libunwind (Ubuntu 22.04)",
+            description="remove libunwind -dev packages causing errors on ubuntu 22.04 GitHub runners",
+            cmd=_REMOVE_LIBUNWIND_SCRIPT_LINUX.strip().splitlines(),
+        )
+        .add_extra(StepExecuteOnlyOncePerMatrix())
+        .add_extra(
+            StepExecuteOnlyOn(
+                os=OS.LINUX,
+                version_starts_with=UbuntuVersions.UBUNTU_22_04.value,
+            )
+        )
+        # GitHub-runners-only: NEVER run on a dev machine. Removing
+        # packages with apt on a persistent host can cascade into removing
+        # ubuntu-desktop/xserver/NVIDIA drivers.
+        .add_extra(StepSkipExecutionOnLocal())
+    )
 
     p.add_step(
         StepInstallAptPackages(
@@ -328,21 +332,6 @@ def install_csopencvcpu_build_dependencies(
     )
 
     return report
-
-
-def opencv_mapping(
-    context: ContextOsArchitectureCompilerGenerator,
-) -> ContextOsArchitectureCompilerGenerator | None:
-    """Map a consumer execution context to the csopencvcpu archive context.
-
-    csopencvcpu builds the csorchestrator default execution matrix
-    (``get_supported_context_os_architecture_list()``), so every supported
-    context maps to itself (identity mapping). ``None`` is only returned for
-    contexts outside the supported list, which cannot happen through the
-    standard matrix but keeps the signature future-proof if the build matrix
-    is ever restricted again.
-    """
-    return deepcopy(context)
 
 
 def auto_install_csorchestrator_managed_libraries(
