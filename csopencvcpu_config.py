@@ -38,7 +38,6 @@ from csorchestrator.domain.context.context_compiler_generator import (
 from csorchestrator.domain.context.context_os_architecture import (
     OS,
     UBUNTU_STRING_PREFIX,
-    UbuntuVersions,
 )
 from csorchestrator.domain.context.context_os_architecture_compiler_generator import (
     ContextOsArchitectureCompilerGenerator,
@@ -259,20 +258,20 @@ def install_csopencvcpu_build_dependencies(
         .add_extra(StepExecuteOnlyOn(os=OS.LINUX, version_starts_with=UBUNTU_STRING_PREFIX))
     )
 
-    p.add_step(
-        StepBashScriptCommand(
-            name="Remove libunwind (Ubuntu 22.04)",
-            description="remove libunwind -dev packages causing errors on ubuntu 22.04",
-            cmd=_REMOVE_LIBUNWIND_SCRIPT_LINUX.strip().splitlines(),
-        )
-        .add_extra(StepExecuteOnlyOncePerMatrix())
-        .add_extra(
-            StepExecuteOnlyOn(
-                os=OS.LINUX,
-                version_starts_with=UbuntuVersions.UBUNTU_22_04.value,
-            )
-        )
-    )
+    #     p.add_step(
+    #         StepBashScriptCommand(
+    #             name="Remove libunwind (Ubuntu 22.04)",
+    #             description="remove libunwind -dev packages causing errors on ubuntu 22.04",
+    #             cmd=_REMOVE_LIBUNWIND_SCRIPT_LINUX.strip().splitlines(),
+    #         )
+    #         .add_extra(StepExecuteOnlyOncePerMatrix())
+    #         .add_extra(
+    #             StepExecuteOnlyOn(
+    #                 os=OS.LINUX,
+    #                 version_starts_with=UbuntuVersions.UBUNTU_22_04.value,
+    #             )
+    #         )
+    #     )
 
     p.add_step(
         StepInstallAptPackages(

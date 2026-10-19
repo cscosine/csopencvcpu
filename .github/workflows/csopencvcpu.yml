@@ -302,22 +302,6 @@ jobs:
         sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ttf-mscorefonts-installer
       if: ${{ matrix.os == 'linux' && startsWith(matrix.os_version, 'ubuntu') }}
       shell: bash
-    - name: Run command Remove libunwind (Ubuntu 22.04)
-      run: |-
-        set -euo pipefail
-
-        # Remove libunwind causing errors on ubuntu 22.04. No-op when not installed.
-        packages=$(dpkg -l 'libunwind*' 2>/dev/null | awk '$1 == "ii" {print $2}' || true)
-        if [ -z "${packages}" ]; then
-          echo "libunwind not installed, nothing to remove."
-          exit 0
-        fi
-
-        echo "Removing: ${packages}"
-        # shellcheck disable=SC2086
-        sudo apt-get remove -y ${packages}
-      if: ${{ matrix.os == 'linux' && startsWith(matrix.os_version, 'ubuntu22.04') }}
-      shell: bash
     - name: Run command Install apt packages (Linux)
       run: |-
         set -euo pipefail # enable strict mode
