@@ -67,7 +67,7 @@ def create_orchestrator() -> OptionalOrchestratorWithReport:
         checkout_phase_name="Repos Update",
         repo_ref_dict={
             "csCMake": "main",
-            "opencv": "dev-cpu",
+            "opencv": "v5.0.1-cpu",
             "opencv_contrib": f"v{OPENCV_VERSION}-cpu",
         },
         repo_access_token="${{ secrets.ACTIONS_ORG_ACCESS }}",
