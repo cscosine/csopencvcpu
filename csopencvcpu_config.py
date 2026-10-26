@@ -20,7 +20,6 @@ standard provider mechanism. It is called by `csopencvcpu_project.py`
 (consumers pulling the precompiled OpenCV archives);
 """
 
-from copy import deepcopy
 from pathlib import Path
 
 from csorchestrator.application.recipes.manifest_github import (
@@ -28,18 +27,10 @@ from csorchestrator.application.recipes.manifest_github import (
     create_steps_to_get_libs_from_manifest,
     resolve_libs_deps_and_install_dependencies,
 )
-from csorchestrator.domain.context.context_compiler_generator import (
-    Compiler,
-    ContextCompilerGenerator,
-    GeneratorWithType,
-)
 from csorchestrator.domain.context.context_os_architecture import (
     OS,
     UBUNTU_STRING_PREFIX,
     UbuntuVersions,
-)
-from csorchestrator.domain.context.context_os_architecture_compiler_generator import (
-    ContextOsArchitectureCompilerGenerator,
 )
 from csorchestrator.domain.orchestrator.orchestrator import Orchestrator
 from csorchestrator.foundation.core.report import Report
@@ -90,28 +81,6 @@ LIBRARY_DEPENDENCIES: dict[str, list[str]] = {
 
 # project additional dependencies for `dev`
 LIBRARY_DEPENDENCIES_DEV: dict[str, list[str]] = {}
-
-
-def third_party_base_libs_mapping(
-    context: ContextOsArchitectureCompilerGenerator,
-) -> ContextOsArchitectureCompilerGenerator | None:
-    """Remap the context when downloading precompiled third-party base libs.
-
-    OpenCV is built with the Ninja single-config generator, while the
-    precompiled eigen archives published by third_party_base_libs are built
-    with the ninja-multiconfig Linux x64 context: remap on Linux so that the
-    published archive is found. Windows contexts are already the published
-    (MSVC multi-config) ones and are left unchanged.
-    """
-    if context.context_os_architecture.os == OS.LINUX:
-        new_context = deepcopy(context)
-        new_context.context_compiler_generator = ContextCompilerGenerator(
-            compiler_family=Compiler.GCC,
-            compiler_version=ContextCompilerGenerator.COMPILER_VERSION_DEFAULT,
-            build_generator=GeneratorWithType.NINJA_MULTI,
-        )
-        return new_context
-    return deepcopy(context)
 
 
 # ============================================================================
