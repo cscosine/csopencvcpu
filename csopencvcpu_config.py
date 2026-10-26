@@ -245,7 +245,7 @@ def install_csopencvcpu_build_dependencies(
     """
     report = Report()
 
-    p = orchestrator.create_phase("Install Build Dependencies (csopencvcpu)")
+    p = orchestrator.create_phase("Install Build Dependencies (csopencvcpu) " + phase_name_suffix)
 
     # ------------------------------ LINUX ------------------------------
     p.add_step(
