@@ -9,6 +9,7 @@ from csorchestrator.application.recipes.checkout_build import checkout_repos, cr
 from csorchestrator.application.recipes.create_orchestrator import (
     create_default_orchestrator,
 )
+from csorchestrator.application.recipes.cscmake_release import create_cscmake_release_archive
 from csorchestrator.domain.context.context_os_architecture import OS, UBUNTU_STRING_PREFIX
 from csorchestrator.foundation.core.report import Report
 from csorchestrator.frontend.cscmake_presets.supported_variants import BuildConfig
@@ -51,6 +52,7 @@ def create_orchestrator() -> OptionalOrchestratorWithReport:
     base_target_dir = Path("workspace")
     base_install_dir = base_target_dir / Path("install")
     base_libs_dir = base_target_dir / Path("libs")
+    cscmake_version = "1.0.0-rc1"
 
     o = create_default_orchestrator(
         name="csopencvcpu",
@@ -66,11 +68,11 @@ def create_orchestrator() -> OptionalOrchestratorWithReport:
         base_target_dir=base_target_dir,
         checkout_phase_name="Repos Update",
         repo_ref_dict={
-            "csCMake": "main",
-            "opencv": "v5.0.1-cpu",
+            "opencv": "v5.0.2-cpu",
             "opencv_contrib": f"v{OPENCV_VERSION}-cpu",
         },
         repo_access_token="${{ secrets.ACTIONS_ORG_ACCESS }}",
+        release_archive_list=[create_cscmake_release_archive(cscmake_version)],
     )
 
     # ----------------------------------------------------------------
