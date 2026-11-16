@@ -88,7 +88,7 @@ The project version (`5.0.0`, tracking the OpenCV release being built) is define
 ### Execution Phases
 
 1. **Repos Update**:
-   - Downloads the csCMake release package pinned in [`csopencvcpu_project.py`](csopencvcpu_project.py) (`cscmake_version`, e.g. `1.0.0-rc1`) and unpacks it into `workspace/csCMake`, where the presets of the OpenCV fork find it (sibling layout).
+   - Downloads the csCMake release package pinned in [`csopencvcpu_project.py`](csopencvcpu_project.py) (`cscmake_version`, e.g. `1.0.0-rc6`) and unpacks it into `workspace/csCMake`, where the presets of the OpenCV fork find it (sibling layout).
    - Shallow clones (`depth=1`) of `cscosine/opencv` and `cscosine/opencv_contrib` at the tags configured in [`csopencvcpu_project.py`](csopencvcpu_project.py) (e.g. `v5.0.2-cpu`, `v5.0.0-cpu`).
 2. **Install Build Dependencies (csopencvcpu)**:
    - All environment-replication steps: Microsoft fonts EULA pre-accept, libunwind removal (Ubuntu 22.04), apt dev packages, numpy (Windows).

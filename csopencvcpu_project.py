@@ -56,7 +56,7 @@ def create_orchestrator() -> OptionalOrchestratorWithReport:
     base_target_dir = Path("workspace")
     base_install_dir = base_target_dir / Path("install")
     base_libs_dir = base_target_dir / Path("libs")
-    cscmake_version = "1.0.0-rc5"
+    cscmake_version = "1.0.0-rc6"
 
     o = create_default_orchestrator(
         name="csopencvcpu",
@@ -78,7 +78,7 @@ def create_orchestrator() -> OptionalOrchestratorWithReport:
         base_target_dir=base_target_dir,
         checkout_phase_name="Repos Update",
         repo_ref_dict={
-            "opencv": "v5.0.2-cpu.1",
+            "opencv": "v5.0.2-cpu.2",
             "opencv_contrib": f"v{OPENCV_VERSION}-cpu",
         },
         repo_access_token="${{ secrets.ACTIONS_ORG_ACCESS }}",
