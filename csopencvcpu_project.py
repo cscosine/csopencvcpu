@@ -10,7 +10,6 @@ from csorchestrator.application.recipes.create_orchestrator import (
     create_default_orchestrator,
 )
 from csorchestrator.application.recipes.cscmake_release import create_cscmake_release_archive
-from csorchestrator.domain.context.context_compiler_generator import GeneratorWithType
 from csorchestrator.domain.context.context_os_architecture import OS, UBUNTU_STRING_PREFIX
 from csorchestrator.foundation.core.report import Report
 from csorchestrator.frontend.cscmake_presets.supported_variants import (
@@ -65,12 +64,11 @@ def create_orchestrator() -> OptionalOrchestratorWithReport:
         base_install_dir=base_install_dir,
         populate_default_matrix=True,
         additional_files_list=[Path("csopencvcpu_config.py")],
-        # opt-in variants: Ubuntu 26.04 (as 22.04/24.04) and macOS 15/26 with Ninja Multi-Config only (the Xcode
-        # consumers use the same archives: they name csopencvcpu_mapping of csopencvcpu_config.py)
+        # opt-in variants: Ubuntu 26.04 (as 22.04/24.04) and macOS 15/26 (Ninja Multi-Config, Xcode)
         additional_matrix_list=(
             get_context_list_linux("ubuntu26.04")
-            + get_context_list_macos("macos15", generators=[GeneratorWithType.NINJA_MULTI])
-            + get_context_list_macos("macos26", generators=[GeneratorWithType.NINJA_MULTI])
+            + get_context_list_macos("macos15")
+            + get_context_list_macos("macos26")
         ),
     )
 

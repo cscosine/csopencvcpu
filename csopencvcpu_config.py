@@ -20,7 +20,6 @@ standard provider mechanism. It is called by `csopencvcpu_project.py`
 (consumers pulling the precompiled OpenCV archives);
 """
 
-import dataclasses
 from pathlib import Path
 
 from csorchestrator.application.recipes.manifest_github import (
@@ -28,14 +27,10 @@ from csorchestrator.application.recipes.manifest_github import (
     create_steps_to_get_libs_from_manifest,
     resolve_libs_deps_and_install_dependencies,
 )
-from csorchestrator.domain.context.context_compiler_generator import GeneratorWithType
 from csorchestrator.domain.context.context_os_architecture import (
     OS,
     UBUNTU_STRING_PREFIX,
     UbuntuVersions,
-)
-from csorchestrator.domain.context.context_os_architecture_compiler_generator import (
-    ContextOsArchitectureCompilerGenerator,
 )
 from csorchestrator.domain.orchestrator.orchestrator import Orchestrator
 from csorchestrator.foundation.core.report import Report
@@ -191,24 +186,6 @@ if ($numpyExitCode -eq 0) {
     }
 }
 """
-
-
-def csopencvcpu_mapping(
-    context: ContextOsArchitectureCompilerGenerator,
-) -> ContextOsArchitectureCompilerGenerator | None:
-    """Mapping for the consumers of the precompiled OpenCV archives.
-
-    macOS is built with Ninja Multi-Config only: an Xcode consumer uses the Ninja Multi-Config archives of its
-    macOS version (same Apple Clang, same libraries, the generator only changes how OpenCV itself is built).
-    Every other variant is used as is.
-    """
-    ccg = context.context_compiler_generator
-    if context.context_os_architecture.os == OS.MACOS and ccg.build_generator == GeneratorWithType.XCODE:
-        return dataclasses.replace(
-            context,
-            context_compiler_generator=dataclasses.replace(ccg, build_generator=GeneratorWithType.NINJA_MULTI),
-        )
-    return context
 
 
 def install_csopencvcpu_build_dependencies(
