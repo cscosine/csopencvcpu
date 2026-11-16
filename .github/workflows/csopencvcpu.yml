@@ -23,6 +23,8 @@ jobs:
       uses: actions/checkout@v6
     - name: Clean Artifacts Folder
       run: rm -rf artifacts
+    - name: Clean Generated Files Folder
+      run: rm -rf generated-for-release
     - name: Download all artifacts
       uses: actions/download-artifact@v8
       with:
@@ -43,16 +45,16 @@ jobs:
         )
 
         input_folder_base = Path('.')
-        input_manifest_path_variant = [(Path('csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-x64-generic-gcc-default-ninjamulticonfig/csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-x64-generic-gcc-default-ninjamulticonfig.csOrchestratorManifest'), 'csv1-linux-ubuntu22.04-x64-generic-gcc-default-ninjamulticonfig'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-x64-generic-clang-default-ninjamulticonfig/csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-x64-generic-clang-default-ninjamulticonfig.csOrchestratorManifest'), 'csv1-linux-ubuntu22.04-x64-generic-clang-default-ninjamulticonfig'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-arm64-generic-gcc-default-ninja/csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-arm64-generic-gcc-default-ninja.csOrchestratorManifest'), 'csv1-linux-ubuntu22.04-arm64-generic-gcc-default-ninja'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-arm64-generic-clang-default-ninja/csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-arm64-generic-clang-default-ninja.csOrchestratorManifest'), 'csv1-linux-ubuntu22.04-arm64-generic-clang-default-ninja'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-x64-generic-gcc-default-ninjamulticonfig/csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-x64-generic-gcc-default-ninjamulticonfig.csOrchestratorManifest'), 'csv1-linux-ubuntu24.04-x64-generic-gcc-default-ninjamulticonfig'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-x64-generic-clang-default-ninjamulticonfig/csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-x64-generic-clang-default-ninjamulticonfig.csOrchestratorManifest'), 'csv1-linux-ubuntu24.04-x64-generic-clang-default-ninjamulticonfig'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-arm64-generic-gcc-default-ninja/csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-arm64-generic-gcc-default-ninja.csOrchestratorManifest'), 'csv1-linux-ubuntu24.04-arm64-generic-gcc-default-ninja'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-arm64-generic-clang-default-ninja/csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-arm64-generic-clang-default-ninja.csOrchestratorManifest'), 'csv1-linux-ubuntu24.04-arm64-generic-clang-default-ninja'), (Path('csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvc-default-msvc2022/csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvc-default-msvc2022.csOrchestratorManifest'), 'csv1-windows-v10-x64-generic-msvc-default-msvc2022'), (Path('csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvc-default-msvc2026/csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvc-default-msvc2026.csOrchestratorManifest'), 'csv1-windows-v10-x64-generic-msvc-default-msvc2026'), (Path('csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvcclang-default-msvc2022/csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvcclang-default-msvc2022.csOrchestratorManifest'), 'csv1-windows-v10-x64-generic-msvcclang-default-msvc2022'), (Path('csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvcclang-default-msvc2026/csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvcclang-default-msvc2026.csOrchestratorManifest'), 'csv1-windows-v10-x64-generic-msvcclang-default-msvc2026')]
+        input_manifest_path_variant = [(Path('csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-x64-generic-gcc-default-ninjamulticonfig/csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-x64-generic-gcc-default-ninjamulticonfig.csOrchestratorManifest'), 'csv1-linux-ubuntu22.04-x64-generic-gcc-default-ninjamulticonfig'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-x64-generic-clang-default-ninjamulticonfig/csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-x64-generic-clang-default-ninjamulticonfig.csOrchestratorManifest'), 'csv1-linux-ubuntu22.04-x64-generic-clang-default-ninjamulticonfig'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-arm64-generic-gcc-default-ninja/csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-arm64-generic-gcc-default-ninja.csOrchestratorManifest'), 'csv1-linux-ubuntu22.04-arm64-generic-gcc-default-ninja'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-arm64-generic-clang-default-ninja/csopencvcpu-5.0.0-csv1-linux-ubuntu22.04-arm64-generic-clang-default-ninja.csOrchestratorManifest'), 'csv1-linux-ubuntu22.04-arm64-generic-clang-default-ninja'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-x64-generic-gcc-default-ninjamulticonfig/csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-x64-generic-gcc-default-ninjamulticonfig.csOrchestratorManifest'), 'csv1-linux-ubuntu24.04-x64-generic-gcc-default-ninjamulticonfig'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-x64-generic-clang-default-ninjamulticonfig/csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-x64-generic-clang-default-ninjamulticonfig.csOrchestratorManifest'), 'csv1-linux-ubuntu24.04-x64-generic-clang-default-ninjamulticonfig'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-arm64-generic-gcc-default-ninja/csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-arm64-generic-gcc-default-ninja.csOrchestratorManifest'), 'csv1-linux-ubuntu24.04-arm64-generic-gcc-default-ninja'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-arm64-generic-clang-default-ninja/csopencvcpu-5.0.0-csv1-linux-ubuntu24.04-arm64-generic-clang-default-ninja.csOrchestratorManifest'), 'csv1-linux-ubuntu24.04-arm64-generic-clang-default-ninja'), (Path('csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvc-default-msvc2022/csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvc-default-msvc2022.csOrchestratorManifest'), 'csv1-windows-v10-x64-generic-msvc-default-msvc2022'), (Path('csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvc-default-msvc2026/csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvc-default-msvc2026.csOrchestratorManifest'), 'csv1-windows-v10-x64-generic-msvc-default-msvc2026'), (Path('csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvcclang-default-msvc2022/csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvcclang-default-msvc2022.csOrchestratorManifest'), 'csv1-windows-v10-x64-generic-msvcclang-default-msvc2022'), (Path('csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvcclang-default-msvc2026/csopencvcpu-5.0.0-csv1-windows-v10-x64-generic-msvcclang-default-msvc2026.csOrchestratorManifest'), 'csv1-windows-v10-x64-generic-msvcclang-default-msvc2026'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu26.04-x64-generic-gcc-default-ninjamulticonfig/csopencvcpu-5.0.0-csv1-linux-ubuntu26.04-x64-generic-gcc-default-ninjamulticonfig.csOrchestratorManifest'), 'csv1-linux-ubuntu26.04-x64-generic-gcc-default-ninjamulticonfig'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu26.04-x64-generic-clang-default-ninjamulticonfig/csopencvcpu-5.0.0-csv1-linux-ubuntu26.04-x64-generic-clang-default-ninjamulticonfig.csOrchestratorManifest'), 'csv1-linux-ubuntu26.04-x64-generic-clang-default-ninjamulticonfig'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu26.04-arm64-generic-gcc-default-ninja/csopencvcpu-5.0.0-csv1-linux-ubuntu26.04-arm64-generic-gcc-default-ninja.csOrchestratorManifest'), 'csv1-linux-ubuntu26.04-arm64-generic-gcc-default-ninja'), (Path('csopencvcpu-5.0.0-csv1-linux-ubuntu26.04-arm64-generic-clang-default-ninja/csopencvcpu-5.0.0-csv1-linux-ubuntu26.04-arm64-generic-clang-default-ninja.csOrchestratorManifest'), 'csv1-linux-ubuntu26.04-arm64-generic-clang-default-ninja'), (Path('csopencvcpu-5.0.0-csv1-macos-macos15-arm64-generic-appleclang-default-ninjamulticonfig/csopencvcpu-5.0.0-csv1-macos-macos15-arm64-generic-appleclang-default-ninjamulticonfig.csOrchestratorManifest'), 'csv1-macos-macos15-arm64-generic-appleclang-default-ninjamulticonfig'), (Path('csopencvcpu-5.0.0-csv1-macos-macos26-arm64-generic-appleclang-default-ninjamulticonfig/csopencvcpu-5.0.0-csv1-macos-macos26-arm64-generic-appleclang-default-ninjamulticonfig.csOrchestratorManifest'), 'csv1-macos-macos26-arm64-generic-appleclang-default-ninjamulticonfig')]
         output_manifest_filename = Path('csopencvcpu-5.0.0.csOrchestratorManifest')
         project_name = 'csopencvcpu'
         project_version = '5.0.0'
         base_path_additional_files = Path(os.environ["GITHUB_WORKSPACE"])
         list_additional_files = [Path('csopencvcpu_config.py')]
-        output_folder_additional_files = Path('generated-for-release')
+        output_folder_additional_files = Path(os.environ["GITHUB_WORKSPACE"]) / Path('generated-for-release')
         output_bundle_file_name = Path('csopencvcpu-5.0.0-bundle.tar.gz')
         repo_publish_config_dict = {}
-        header_only_variants_sources = {'csv1-linux': 'csv1-linux-ubuntu22.04-x64-generic-gcc-default-ninjamulticonfig', 'csv1-windows': 'csv1-windows-v10-x64-generic-msvc-default-msvc2022'}
+        header_only_variants_sources = {'csv1-linux': 'csv1-linux-ubuntu22.04-x64-generic-gcc-default-ninjamulticonfig', 'csv1-windows': 'csv1-windows-v10-x64-generic-msvc-default-msvc2022', 'csv1-macos': 'csv1-macos-macos15-arm64-generic-appleclang-default-ninjamulticonfig'}
         dependencies = {}
         dependencies_dev = {}
 
@@ -86,22 +88,23 @@ jobs:
       with:
         name: csopencvcpu-5.0.0.csOrchestratorManifest
         path: |-
-          artifacts/generated-for-release/csopencvcpu-5.0.0.csOrchestratorManifest
+          generated-for-release/csopencvcpu-5.0.0.csOrchestratorManifest
         overwrite: true
     - name: Upload additional file csopencvcpu-5.0.0-bundle.tar.gz as artifact
       uses: actions/upload-artifact@v7
       with:
         name: csopencvcpu-5.0.0-bundle.tar.gz
         path: |-
-          artifacts/generated-for-release/csopencvcpu-5.0.0-bundle.tar.gz
+          generated-for-release/csopencvcpu-5.0.0-bundle.tar.gz
         overwrite: true
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v3
       with:
         files: |-
           artifacts/**/*.tar.gz
-          artifacts/generated-for-release/csopencvcpu-5.0.0.csOrchestratorManifest
-          artifacts/generated-for-release/csopencvcpu-5.0.0-bundle.tar.gz
+          artifacts/**/*.zip
+          generated-for-release/csopencvcpu-5.0.0.csOrchestratorManifest
+          generated-for-release/csopencvcpu-5.0.0-bundle.tar.gz
       if: ${{ github.ref_type == 'tag' }}
   orchestrator-matrix:
     runs-on: ${{ matrix.runner }}
@@ -259,27 +262,105 @@ jobs:
           generator_cmake: Visual Studio 18 2026
           runner: windows-2025-vs2026
           toolset: ClangCL
+        - execution_id: '12'
+          os: linux
+          os_version: ubuntu26.04
+          architecture: x64
+          architecture_variant: generic
+          compiler: gcc
+          compiler_version: default
+          generator: ninjamulticonfig
+          generator_type: multiconfig
+          generator_cmake: Ninja Multi-Config
+          runner: ubuntu-26.04
+          c_compiler: gcc
+          cpp_compiler: g++
+        - execution_id: '13'
+          os: linux
+          os_version: ubuntu26.04
+          architecture: x64
+          architecture_variant: generic
+          compiler: clang
+          compiler_version: default
+          generator: ninjamulticonfig
+          generator_type: multiconfig
+          generator_cmake: Ninja Multi-Config
+          runner: ubuntu-26.04
+          c_compiler: clang
+          cpp_compiler: clang++
+        - execution_id: '14'
+          os: linux
+          os_version: ubuntu26.04
+          architecture: arm64
+          architecture_variant: generic
+          compiler: gcc
+          compiler_version: default
+          generator: ninja
+          generator_type: singleconfig
+          generator_cmake: Ninja
+          runner: ubuntu-26.04-arm
+          c_compiler: gcc
+          cpp_compiler: g++
+        - execution_id: '15'
+          os: linux
+          os_version: ubuntu26.04
+          architecture: arm64
+          architecture_variant: generic
+          compiler: clang
+          compiler_version: default
+          generator: ninja
+          generator_type: singleconfig
+          generator_cmake: Ninja
+          runner: ubuntu-26.04-arm
+          c_compiler: clang
+          cpp_compiler: clang++
+        - execution_id: '16'
+          os: macos
+          os_version: macos15
+          architecture: arm64
+          architecture_variant: generic
+          compiler: appleclang
+          compiler_version: default
+          generator: ninjamulticonfig
+          generator_type: multiconfig
+          generator_cmake: Ninja Multi-Config
+          runner: macos-15
+          c_compiler: clang
+          cpp_compiler: clang++
+        - execution_id: '17'
+          os: macos
+          os_version: macos26
+          architecture: arm64
+          architecture_variant: generic
+          compiler: appleclang
+          compiler_version: default
+          generator: ninjamulticonfig
+          generator_type: multiconfig
+          generator_cmake: Ninja Multi-Config
+          runner: macos-26
+          c_compiler: clang
+          cpp_compiler: clang++
     steps:
     - name: Repo git self-checkout
       uses: actions/checkout@v6
-    - name: csCMake v1.0.0-rc1 release download tar.gz
+    - name: csCMake v1.0.0-rc5 release download tar.gz
       uses: robinraju/release-downloader@v1.13
       with:
         repository: cscosine/csCMake
-        tag: v1.0.0-rc1
-        fileName: csCMake-1.0.0-rc1.tar.gz
+        tag: v1.0.0-rc5
+        fileName: csCMake-1.0.0-rc5.tar.gz
         out-file-path: workspace
-    - name: csCMake v1.0.0-rc1 release extract tar.gz
+    - name: csCMake v1.0.0-rc5 release extract tar.gz
       run: |-
-        tar -xzf workspace/csCMake-1.0.0-rc1.tar.gz -C workspace
-        rm -f workspace/csCMake-1.0.0-rc1.tar.gz
+        tar -xzf workspace/csCMake-1.0.0-rc5.tar.gz -C workspace
+        rm -f workspace/csCMake-1.0.0-rc5.tar.gz
       shell: bash
     - name: opencv Git clone/pull-ff
       uses: actions/checkout@v6
       with:
         repository: cscosine/opencv.git
         path: workspace/opencv
-        ref: v5.0.2-cpu
+        ref: v5.0.2-cpu.1
         fetch-depth: '1'
         token: ${{ secrets.ACTIONS_ORG_ACCESS }}
     - name: opencv_contrib Git clone/pull-ff
@@ -395,13 +476,13 @@ jobs:
       uses: robinraju/release-downloader@v1.13
       with:
         repository: cscosine/third_party_base_libs
-        tag: v0.1.0-rc6
-        fileName: third_party_base_libs-0.1.0-eigen3-3.4.0-csv1-${{ matrix.os }}.tar.gz
+        tag: v0.1.0-rc7
+        fileName: third_party_base_libs-0.1.0-eigen3-5.0.1-csv1-${{ matrix.os }}.tar.gz
         out-file-path: workspace/libs/csv1-${{ matrix.os }}-${{ matrix.os_version }}-${{ matrix.architecture }}-${{ matrix.architecture_variant }}-${{ matrix.compiler }}-${{ matrix.compiler_version }}-${{ matrix.generator }}
     - name: Get Precompiled Lib eigen3 extract tar.gz
       run: |-
-        tar -xzf workspace/libs/csv1-${{ matrix.os }}-${{ matrix.os_version }}-${{ matrix.architecture }}-${{ matrix.architecture_variant }}-${{ matrix.compiler }}-${{ matrix.compiler_version }}-${{ matrix.generator }}/third_party_base_libs-0.1.0-eigen3-3.4.0-csv1-${{ matrix.os }}.tar.gz -C workspace/libs/csv1-${{ matrix.os }}-${{ matrix.os_version }}-${{ matrix.architecture }}-${{ matrix.architecture_variant }}-${{ matrix.compiler }}-${{ matrix.compiler_version }}-${{ matrix.generator }}
-        rm -f workspace/libs/csv1-${{ matrix.os }}-${{ matrix.os_version }}-${{ matrix.architecture }}-${{ matrix.architecture_variant }}-${{ matrix.compiler }}-${{ matrix.compiler_version }}-${{ matrix.generator }}/third_party_base_libs-0.1.0-eigen3-3.4.0-csv1-${{ matrix.os }}.tar.gz
+        tar -xzf workspace/libs/csv1-${{ matrix.os }}-${{ matrix.os_version }}-${{ matrix.architecture }}-${{ matrix.architecture_variant }}-${{ matrix.compiler }}-${{ matrix.compiler_version }}-${{ matrix.generator }}/third_party_base_libs-0.1.0-eigen3-5.0.1-csv1-${{ matrix.os }}.tar.gz -C workspace/libs/csv1-${{ matrix.os }}-${{ matrix.os_version }}-${{ matrix.architecture }}-${{ matrix.architecture_variant }}-${{ matrix.compiler }}-${{ matrix.compiler_version }}-${{ matrix.generator }}
+        rm -f workspace/libs/csv1-${{ matrix.os }}-${{ matrix.os_version }}-${{ matrix.architecture }}-${{ matrix.architecture_variant }}-${{ matrix.compiler }}-${{ matrix.compiler_version }}-${{ matrix.generator }}/third_party_base_libs-0.1.0-eigen3-5.0.1-csv1-${{ matrix.os }}.tar.gz
       shell: bash
     - name: cmake workflow on opencv CMake Workflow (Linux) for config(s) debug-release
       run: |-
@@ -416,6 +497,21 @@ jobs:
           exit 1
         fi
       if: ${{ matrix.os == 'linux' && startsWith(matrix.os_version, 'ubuntu') }}
+      shell: bash
+      working-directory: workspace/opencv
+    - name: cmake workflow on opencv CMake Workflow (macOS) for config(s) debug-release
+      run: |-
+        set -e
+        if [[ "${{ matrix.generator_type }}" == "singleconfig" ]]; then
+          cmake --workflow workflow-csv1-${{ matrix.os }}-${{ matrix.os_version }}-${{ matrix.architecture }}-${{ matrix.architecture_variant }}-${{ matrix.compiler }}-${{ matrix.compiler_version }}-${{ matrix.generator }}-debug
+          cmake --workflow workflow-csv1-${{ matrix.os }}-${{ matrix.os_version }}-${{ matrix.architecture }}-${{ matrix.architecture_variant }}-${{ matrix.compiler }}-${{ matrix.compiler_version }}-${{ matrix.generator }}-release
+        elif [[ "${{ matrix.generator_type }}" == "multiconfig" ]]; then
+          cmake --workflow workflow-csv1-${{ matrix.os }}-${{ matrix.os_version }}-${{ matrix.architecture }}-${{ matrix.architecture_variant }}-${{ matrix.compiler }}-${{ matrix.compiler_version }}-${{ matrix.generator }}-debug-release
+        else
+          echo "Unknown generator_type: ${{ matrix.generator_type }}"
+          exit 1
+        fi
+      if: ${{ matrix.os == 'macos' }}
       shell: bash
       working-directory: workspace/opencv
     - name: cmake workflow on opencv CMake Workflow (Windows on powershell) for config(s) debug-release

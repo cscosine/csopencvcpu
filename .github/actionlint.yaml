@@ -1,0 +1,5 @@
+# GitHub-hosted runner labels newer than the actionlint release in .pre-commit-config.yaml
+self-hosted-runner:
+  labels:
+    - ubuntu-26.04
+    - ubuntu-26.04-arm

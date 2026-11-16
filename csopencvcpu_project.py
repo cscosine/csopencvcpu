@@ -10,9 +10,14 @@ from csorchestrator.application.recipes.create_orchestrator import (
     create_default_orchestrator,
 )
 from csorchestrator.application.recipes.cscmake_release import create_cscmake_release_archive
+from csorchestrator.domain.context.context_compiler_generator import GeneratorWithType
 from csorchestrator.domain.context.context_os_architecture import OS, UBUNTU_STRING_PREFIX
 from csorchestrator.foundation.core.report import Report
-from csorchestrator.frontend.cscmake_presets.supported_variants import BuildConfig
+from csorchestrator.frontend.cscmake_presets.supported_variants import (
+    BuildConfig,
+    get_context_list_linux,
+    get_context_list_macos,
+)
 from csorchestrator.frontend.local_execution.step_utils import StepExecuteOnlyOn
 from csorchestrator.frontend.step.step_cmake_command import (
     StepCMakeWorkflow,
@@ -52,7 +57,7 @@ def create_orchestrator() -> OptionalOrchestratorWithReport:
     base_target_dir = Path("workspace")
     base_install_dir = base_target_dir / Path("install")
     base_libs_dir = base_target_dir / Path("libs")
-    cscmake_version = "1.0.0-rc1"
+    cscmake_version = "1.0.0-rc5"
 
     o = create_default_orchestrator(
         name="csopencvcpu",
@@ -60,6 +65,13 @@ def create_orchestrator() -> OptionalOrchestratorWithReport:
         base_install_dir=base_install_dir,
         populate_default_matrix=True,
         additional_files_list=[Path("csopencvcpu_config.py")],
+        # opt-in variants: Ubuntu 26.04 (as 22.04/24.04) and macOS 15/26 with Ninja Multi-Config only (the Xcode
+        # consumers use the same archives: they name csopencvcpu_mapping of csopencvcpu_config.py)
+        additional_matrix_list=(
+            get_context_list_linux("ubuntu26.04")
+            + get_context_list_macos("macos15", generators=[GeneratorWithType.NINJA_MULTI])
+            + get_context_list_macos("macos26", generators=[GeneratorWithType.NINJA_MULTI])
+        ),
     )
 
     # ----------------------------------------------------------------
@@ -68,7 +80,7 @@ def create_orchestrator() -> OptionalOrchestratorWithReport:
         base_target_dir=base_target_dir,
         checkout_phase_name="Repos Update",
         repo_ref_dict={
-            "opencv": "v5.0.2-cpu",
+            "opencv": "v5.0.2-cpu.1",
             "opencv_contrib": f"v{OPENCV_VERSION}-cpu",
         },
         repo_access_token="${{ secrets.ACTIONS_ORG_ACCESS }}",
@@ -102,6 +114,15 @@ def create_orchestrator() -> OptionalOrchestratorWithReport:
             source_dir=(base_target_dir / "opencv").as_posix(),
             config=BuildConfig.DEBUG_RELEASE,
         ).add_extra(StepExecuteOnlyOn(os=OS.LINUX, version_starts_with=UBUNTU_STRING_PREFIX))
+    )
+
+    p.add_step(
+        StepCMakeWorkflow(
+            name="opencv CMake Workflow (macOS)",
+            description="CMake workflow for opencv with config: DEBUG_RELEASE",
+            source_dir=(base_target_dir / "opencv").as_posix(),
+            config=BuildConfig.DEBUG_RELEASE,
+        ).add_extra(StepExecuteOnlyOn(os=OS.MACOS))
     )
 
     # NOTE: we need to use powershell for windows because of the path manipulation
