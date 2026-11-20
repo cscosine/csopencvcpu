@@ -85,11 +85,16 @@ The core build recipe is defined in [`csopencvcpu_project.py`](csopencvcpu_proje
 
 The project version (`5.0.0`, tracking the OpenCV release being built) is defined in [`csopencvcpu_project.py`](csopencvcpu_project.py) (`OPENCV_VERSION`) and mirrored in [`pyproject.toml`](pyproject.toml) — keep the two aligned when bumping the version.
 
+Release tags follow the tag of the OpenCV fork they ship: `v<OpenCV version>-cpu.<n>` (e.g. `v5.0.0-cpu.1`, built
+from the fork's `v5.0.0-cpu.1`), release candidates `v5.0.0-cpu.1-rc<n>`. The project version stays the OpenCV
+version (`5.0.0`), the one consumers pin (`project_version`). The fork: `cscosine/opencv`, branch `dev-cpu` (its
+`cscosine/README.md`).
+
 ### Execution Phases
 
 1. **Repos Update**:
-   - Downloads the csCMake release package pinned in [`csopencvcpu_project.py`](csopencvcpu_project.py) (`cscmake_version`, e.g. `1.0.0-rc6`) and unpacks it into `workspace/csCMake`, where the presets of the OpenCV fork find it (sibling layout).
-   - Shallow clones (`depth=1`) of `cscosine/opencv` and `cscosine/opencv_contrib` at the tags configured in [`csopencvcpu_project.py`](csopencvcpu_project.py) (e.g. `v5.0.2-cpu`, `v5.0.0-cpu`).
+   - Downloads the csCMake release package pinned in [`csopencvcpu_project.py`](csopencvcpu_project.py) (`cscmake_version`, e.g. `1.0.0-rc8`) and unpacks it into `workspace/csCMake`, where the presets of the OpenCV fork find it (sibling layout).
+   - Shallow clones (`depth=1`) of `cscosine/opencv` and `cscosine/opencv_contrib` at the tags configured in [`csopencvcpu_project.py`](csopencvcpu_project.py) (`opencv`: `v5.0.0-cpu.1`, the CPU variant of the fork; `opencv_contrib`: `v5.0.0-cpu`).
 2. **Install Build Dependencies (csopencvcpu)**:
    - All environment-replication steps: Microsoft fonts EULA pre-accept, libunwind removal (Ubuntu 22.04), apt dev packages, numpy (Windows).
    - Precompiled `eigen3` downloaded from the [third_party_base_libs](https://github.com/cscosine/third_party_base_libs) provider (`ManifestGithub` + `StepGetPrecompiledLibGithub`).

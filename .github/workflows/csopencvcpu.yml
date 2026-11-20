@@ -369,26 +369,25 @@ jobs:
     steps:
     - name: Repo git self-checkout
       uses: actions/checkout@v6
-    - name: csCMake v1.0.0-rc6 release download tar.gz
+    - name: csCMake v1.0.0-rc8 release download tar.gz
       uses: robinraju/release-downloader@v1.13
       with:
         repository: cscosine/csCMake
-        tag: v1.0.0-rc6
-        fileName: csCMake-1.0.0-rc6.tar.gz
+        tag: v1.0.0-rc8
+        fileName: csCMake-1.0.0-rc8.tar.gz
         out-file-path: workspace
-    - name: csCMake v1.0.0-rc6 release extract tar.gz
+    - name: csCMake v1.0.0-rc8 release extract tar.gz
       run: |-
-        tar -xzf workspace/csCMake-1.0.0-rc6.tar.gz -C workspace
-        rm -f workspace/csCMake-1.0.0-rc6.tar.gz
+        tar -xzf workspace/csCMake-1.0.0-rc8.tar.gz -C workspace
+        rm -f workspace/csCMake-1.0.0-rc8.tar.gz
       shell: bash
     - name: opencv Git clone/pull-ff
       uses: actions/checkout@v6
       with:
         repository: cscosine/opencv.git
         path: workspace/opencv
-        ref: v5.0.2-cpu.2
+        ref: v5.0.0-cpu.1
         fetch-depth: '1'
-        token: ${{ secrets.ACTIONS_ORG_ACCESS }}
     - name: opencv_contrib Git clone/pull-ff
       uses: actions/checkout@v6
       with:
@@ -396,7 +395,6 @@ jobs:
         path: workspace/opencv_contrib
         ref: v5.0.0-cpu
         fetch-depth: '1'
-        token: ${{ secrets.ACTIONS_ORG_ACCESS }}
     - name: Run command Pre-accept MS fonts EULA (Linux)
       run: |-
         set -euo pipefail
