@@ -3,12 +3,8 @@ name: csopencvcpu
   push:
     branches:
     - main
-    - dev
     tags:
     - v*.*.*
-  pull_request:
-    branches:
-    - main
   workflow_dispatch: {}
   schedule:
   - cron: 0 3 * * 1
@@ -105,6 +101,7 @@ jobs:
           artifacts/**/*.zip
           generated-for-release/csopencvcpu-5.0.0.csOrchestratorManifest
           generated-for-release/csopencvcpu-5.0.0-bundle.tar.gz
+        prerelease: ${{ contains(github.ref_name, '-rc') }}
       if: ${{ github.ref_type == 'tag' }}
   orchestrator-matrix:
     runs-on: ${{ matrix.runner }}
@@ -500,7 +497,7 @@ jobs:
       uses: robinraju/release-downloader@v1.13
       with:
         repository: cscosine/third_party_base_libs
-        tag: v0.1.0-rc8
+        tag: v0.1.0-rc10
         fileName: third_party_base_libs-0.1.0-eigen3-5.0.1-csv1-${{ matrix.os }}.tar.gz
         out-file-path: workspace/libs/csv1-${{ matrix.os }}-${{ matrix.os_version }}-${{ matrix.architecture }}-${{ matrix.architecture_variant }}-${{ matrix.compiler }}-${{ matrix.compiler_version }}-${{ matrix.generator }}
     - name: Get Precompiled Lib eigen3 extract tar.gz
