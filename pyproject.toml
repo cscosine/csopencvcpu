@@ -4,7 +4,7 @@
 # lines and replaces the template ones.
 
 [build-system]
-requires = ["setuptools>=77", "wheel"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -27,7 +27,7 @@ dev = [
     "pytest>=9",
     "pytest-cov>=7",
     "mypy>=1.20",
-    "ruff>=0.4",
+    "ruff>=0.15",
     "pre-commit>=4",
     "import-linter[ui]>=2.11",
     "types-PyYAML",
@@ -55,8 +55,7 @@ quote-style = "double"
 
 [tool.mypy]
 mypy_path = "./"
-
-# csorchestrator workspace
+# the csorchestrator workspace
 exclude = "^workspace/"
 python_version = "3.11"
 # strict: no implicit Any, strict optional, unused ignores reported

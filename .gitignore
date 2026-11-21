@@ -8,6 +8,7 @@ __pycache__/
 .pytest_cache/
 .venv/
 *.egg-info/
+dist/
 
 # coverage artifacts
 htmlcov/
@@ -18,9 +19,14 @@ coverage*.xml
 # csorchestrator workspace (checkouts, builds, installs, deploy archives)
 workspace/
 
-# local C++ builds
+# local C++ builds, the developer's own CMake presets
 build/
 out/
 .cache/
+CMakeUserPresets.json
+
+# operating systems
+.DS_Store
+Thumbs.db
 
 # --- project ---

@@ -68,10 +68,13 @@ The commands for each case: [CONTRIBUTING.md](https://github.com/cscosine/.githu
 - Generic behaviour goes in csCMake or csorchestrator; they never contain the names of cscosine projects. What a
   library needs stays in the library; what a provider imposes on its consumers (e.g. system packages of Qt plugins) is
   declared by the provider, not repeated by each consumer.
-- One concern, one place: reuse what exists (e.g. OpenMP through csCore `CS_OMP`, the macOS deployment target through
-  csCMake) instead of a second mechanism.
+- One concern, one place: reuse what exists (e.g. OpenMP through csCore `CS_OMP`, written indented like the statement
+  it precedes, the macOS deployment target through csCMake) instead of a second mechanism.
 - Generated files are never edited by hand: CI workflows (`<name>_project.py generate-github-workflow`), presets
   (`cscmake-generate-presets`), `dependencies/`. Change the source, regenerate, commit both.
+- The shared files of every repository come from `cs-project-template` (who owns which file: the repository's
+  `AGENTS.md`): never edit a template part in a repository; change the template, tag it, `copier update`. Formatting
+  is pre-commit's (clang-format for C / C++ / CUDA, ruff for Python): never by hand.
 - No hidden side effects, no deprecation steps: the ecosystem moves to a new API directly.
 - Projects use released csCMake / csorchestrator; a clone of their `main` only while a change of them is in progress
   (made there, with their own rules, released as the next rc).
