@@ -1,4 +1,4 @@
-# Mixed file. Owned by the project: [project] and its sub-tables, [tool.setuptools], and every table after the
+# Mixed file. Owned by the project: [project] and its sub-tables, and every table after the
 # "project" marker at the end. Owned by the project template (cs-project-template, change it there): [build-system]
 # and the tables between the "template" markers. Never edit a template line here: `copier update` keeps the project
 # lines and replaces the template ones.
@@ -10,7 +10,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "csopencvcpu"
 version = "5.0.0"
-description = "opencv for csorchestrator"
+description = "OpenCV 5 (CPU) built for every platform"
 authors = [
   { name = "cscosine-dev", email = "cscosine@gmail.com" }
 ]
@@ -31,13 +31,15 @@ dev = [
     "pre-commit>=4",
     "import-linter[ui]>=2.11",
     "types-PyYAML",
+    "copier>=9.4",
     # project: below
 ]
 
+# === template: begin =================================================================================================
+
 [tool.setuptools.packages.find]
 where = ["./"]
-
-# === template: begin =================================================================================================
+exclude = ["tests", "tests.*"]
 
 [tool.ruff]
 line-length = 120

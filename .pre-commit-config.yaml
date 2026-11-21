@@ -8,6 +8,9 @@ repos:
     rev: v6.0.0
     hooks:
       - id: check-added-large-files # prevents giant files from being committed.
+        # --- project: begin (files allowed to be large on purpose, e.g. datasets) ---
+        # exclude: ^datasets/
+        # --- project: end ---
       - id: check-case-conflict # checks for files that would conflict in case-insensitive filesystems.
       - id: check-merge-conflict # checks for files that contain merge conflict strings.
       - id: check-yaml # checks yaml files for parseable syntax.
