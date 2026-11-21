@@ -383,14 +383,14 @@ jobs:
       with:
         repository: cscosine/opencv.git
         path: workspace/opencv
-        ref: v5.1.0-cpu.1
+        ref: v5.1.0-cpu.2
         fetch-depth: '1'
     - name: opencv_contrib Git clone/pull-ff
       uses: actions/checkout@v6
       with:
         repository: cscosine/opencv_contrib.git
         path: workspace/opencv_contrib
-        ref: v5.1.0-cpu.1
+        ref: v5.1.0-cpu.2
         fetch-depth: '1'
     - name: Run command Pre-accept MS fonts EULA (Linux)
       run: |-
