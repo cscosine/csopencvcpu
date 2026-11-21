@@ -31,7 +31,7 @@ repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.12
     hooks:
-      - id: ruff
+      - id: ruff-check
         args: [--fix]
       - id: ruff-format
 
@@ -52,10 +52,9 @@ repos:
     rev: v20.1.4
     hooks:
       - id: clang-format
-        # C, C++, CUDA, Objective-C sources only: not JSON or JavaScript (clang-format's other languages), which would
-        # touch generated files such as CMakePresets.json
-        types_or: [c, c++, cuda, objective-c]
-        exclude: '\.m$'
+        # C, C++, CUDA sources only: not JSON or JavaScript (clang-format's other languages), which would touch
+        # generated files such as CMakePresets.json
+        types_or: [c, c++, cuda]
         args: ["-style=file"]
 
   - repo: https://github.com/rhysd/actionlint

@@ -2,7 +2,8 @@
 # Creates .venv, installs the project with its dev tools and csorchestrator, installs the pre-commit hooks.
 # Usage: .\setup.ps1 [-Python <interpreter>] [-CsOrchestrator <tag|branch|path>]
 param(
-    [string]$Python = "python",
+    # default: python when it is 3.11 or newer, otherwise the newest Python 3.14 ... 3.11 of the py launcher
+    [string]$Python = "",
     # tag or branch of github.com/cscosine/csorchestrator, or the path of a local clone (installed editable)
     [string]$CsOrchestrator = "v0.1.0-rc1"
 )
@@ -13,17 +14,34 @@ function Invoke-Checked {
     if ($LASTEXITCODE -ne 0) { throw "Failed: $args" }
 }
 
-Write-Host "Using Python: $Python"
+function Test-RecentPython([string[]]$Command) {
+    try {
+        $exe, $rest = $Command
+        & $exe @rest -c "import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)" 2>$null
+        return $LASTEXITCODE -eq 0
+    } catch { return $false }
+}
+$PythonArgs = @()
+if (-not $Python) {
+    $Python = "python"
+    if (-not (Test-RecentPython @("python"))) {
+        foreach ($minor in 14, 13, 12, 11) {
+            if (Test-RecentPython @("py", "-3.$minor")) { $Python = "py"; $PythonArgs = @("-3.$minor"); break }
+        }
+    }
+}
 
-& $Python -c "import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)"
+Write-Host "Using Python: $Python $PythonArgs"
+
+& $Python @PythonArgs -c "import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Python 3.11 or newer is required."
     Write-Host "Found:"
-    & $Python --version
+    & $Python @PythonArgs --version
     exit 1
 }
 
-Invoke-Checked $Python -m venv .venv
+Invoke-Checked $Python @PythonArgs -m venv .venv
 
 .\.venv\Scripts\Activate.ps1
 
