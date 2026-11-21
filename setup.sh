@@ -1,29 +1,61 @@
 #!/usr/bin/env bash
+# Owned by the project template (cs-project-template): change it there.
+# Creates .venv, installs the project with its dev tools and csorchestrator, installs the pre-commit hooks.
+set -euo pipefail
+
 if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
   echo "Do not source this script. Run: ./setup.sh"
   return 1
 fi
 
-PYTHON="${1:-python3}"
+usage() {
+  cat <<USAGE
+Usage: ./setup.sh [--python=<interpreter>] [--csorchestrator=<tag|branch|path>]
+
+  --python=<interpreter>        Python used to create .venv (default: python3, at least 3.11)
+  --csorchestrator=<spec>       csorchestrator to install (default: v0.1.0-rc1, the pinned version)
+                                  a tag or branch of github.com/cscosine/csorchestrator, or
+                                  the path of a local clone (installed editable, e.g. ../csorchestrator)
+USAGE
+}
+
+PYTHON="python3"
+CSORCHESTRATOR="v0.1.0-rc1"
+for arg in "$@"; do
+  case "${arg}" in
+    --python=*) PYTHON="${arg#*=}" ;;
+    --csorchestrator=*) CSORCHESTRATOR="${arg#*=}" ;;
+    -h|--help) usage; exit 0 ;;
+    *) echo "Unknown argument: ${arg}"; usage; exit 1 ;;
+  esac
+done
 
 echo "Using Python: ${PYTHON}"
 
-# Check Python version >= 3.11
-if ! ${PYTHON} -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)'; then
+if ! "${PYTHON}" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)'; then
   echo "Error: Python 3.11 or newer is required."
   echo "Found:"
-  ${PYTHON} --version
+  "${PYTHON}" --version
   exit 1
 fi
 
-${PYTHON} -m venv .venv
+"${PYTHON}" -m venv .venv
 
+# shellcheck disable=SC1091
 source .venv/bin/activate
 
 python -m pip install --upgrade pip setuptools wheel
 python -m pip install -e ".[dev]"
-python -m pip install -e "../csorchestrator"
 
+# uninstall first: switching between a tag, a branch and a local clone always takes effect
+python -m pip uninstall --yes csorchestrator
+if [[ -d "${CSORCHESTRATOR}" ]]; then
+  echo "csorchestrator: local clone ${CSORCHESTRATOR} (editable)"
+  python -m pip install -e "${CSORCHESTRATOR}"
+else
+  echo "csorchestrator: ${CSORCHESTRATOR} from github.com/cscosine/csorchestrator"
+  python -m pip install "csorchestrator @ git+https://github.com/cscosine/csorchestrator.git@${CSORCHESTRATOR}"
+fi
 
 pre-commit install
 
@@ -35,6 +67,3 @@ echo "  code ."
 echo ""
 echo "Or: "
 echo "  ./open-code.sh"
-echo ""
-echo "Or: "
-echo "  source ./open-code.sh"

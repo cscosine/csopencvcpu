@@ -1,3 +1,4 @@
+# Owned by the project template (cs-project-template): change it there. Project lines: at the end, after the marker.
 * text=auto
 
 # Python
@@ -12,9 +13,19 @@
 *.bat text eol=crlf
 *.ps1 text eol=crlf
 
+# C++ and CMake sources: LF on every OS
+*.h text eol=lf
+*.hpp text eol=lf
+*.cpp text eol=lf
+*.cmake text eol=lf
+*.cmake.in text eol=lf
+CMakeLists.txt text eol=lf
+
 # Binary safety
 *.png binary
 *.jpg binary
 *.zip binary
 *.exe binary
 *.pkl binary
+
+# --- project ---

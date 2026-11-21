@@ -10,7 +10,6 @@
   "python.analysis.indexing": true,
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.analysis.extraPaths": [
-    "${workspaceFolder}/../csorchestrator/src",
     "${workspaceFolder}"
   ],
   "python.analysis.packageIndexDepths": [
@@ -27,6 +26,13 @@
     ".venv"
   ],
   "python.analysis.autoImportCompletions": true,
+  "C_Cpp.intelliSenseEngine": "disabled",
+  "C_Cpp.autocomplete": "disabled",
+  "C_Cpp.errorSquiggles": "disabled",
+  "clangd.arguments": [
+    "--background-index",
+    "--clang-tidy"
+  ],
   "editor.formatOnSave": true,
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",

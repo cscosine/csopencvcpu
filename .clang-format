@@ -1,0 +1,24 @@
+# Owned by the project template (cs-project-template): change it there.
+# The C++ style of every cscosine repository (was csProjectManager/hooks/.clang-format).
+# see https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+---
+Language: Cpp
+BasedOnStyle: LLVM
+Standard: Cpp11
+
+ColumnLimit: 135
+
+AccessModifierOffset: -2
+IndentWidth: 2
+UseTab: Never
+
+AlignEscapedNewlines: Left
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortLambdasOnASingleLine: Empty
+AlwaysBreakTemplateDeclarations: true
+BreakConstructorInitializers: BeforeComma
+IndentPPDirectives: AfterHash
+PointerAlignment: Left
+---
+Language: Json
+BasedOnStyle: llvm

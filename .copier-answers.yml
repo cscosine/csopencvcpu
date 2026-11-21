@@ -1,0 +1,8 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v0.2.2
+_src_path: gh:cscosine/cs-project-template
+csorchestrator_version: v0.1.0-rc1
+description: OpenCV 5 (CPU) built for every platform
+kind: project
+project_name: csopencvcpu
+workspace_dir: workspace
