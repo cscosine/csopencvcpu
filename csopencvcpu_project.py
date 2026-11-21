@@ -30,7 +30,7 @@ from csopencvcpu_config import install_csopencvcpu_build_dependencies
 
 # version of the OpenCV being built (also used as the csopencvcpu project
 # version: keep pyproject.toml in sync when bumping)
-OPENCV_VERSION = "5.0.0"
+OPENCV_VERSION = "5.1.0"
 
 # prefix commands (PowerShell) applied before the CMake workflow on Windows:
 # remove MinGW and Strawberry from PATH to avoid conflicts with MSVC
@@ -79,7 +79,7 @@ def create_orchestrator() -> OptionalOrchestratorWithReport:
         checkout_phase_name="Repos Update",
         repo_ref_dict={
             "opencv": f"v{OPENCV_VERSION}-cpu.1",
-            "opencv_contrib": f"v{OPENCV_VERSION}-cpu",
+            "opencv_contrib": f"v{OPENCV_VERSION}-cpu.1",
         },
         release_archive_list=[create_cscmake_release_archive(cscmake_version)],
     )

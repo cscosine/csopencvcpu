@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "csopencvcpu"
-version = "5.0.0"
+version = "5.1.0"
 description = "OpenCV 5 (CPU) built for every platform"
 authors = [
   { name = "cscosine-dev", email = "cscosine@gmail.com" }
