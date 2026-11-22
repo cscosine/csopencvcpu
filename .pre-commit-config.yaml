@@ -1,6 +1,9 @@
 # Owned by the project template (cs-project-template): change it there.
 # Project hooks: between the `project: begin` / `project: end` markers (they merge cleanly on `copier update`).
 fail_fast: false # using true is too annoying in development
+# --- project: begin (files no hook touches, a regex on the path: e.g. the upstream files of a copied library) ---
+# exclude: ^(docs|vendor)/
+# --- project: end ---
 
 repos:
   # run pre-commit autoupdate to update these versions
@@ -56,6 +59,14 @@ repos:
         # generated files such as CMakePresets.json
         types_or: [c, c++, cuda]
         args: ["-style=file"]
+
+  # CMake: gersemi lays out the CMake files (.gersemirc) with the signatures of the csCMake commands, cscmake-lint checks
+  # the CMake rules of cscosine (lowercase names, a comment above every function, size limits, line length)
+  - repo: https://github.com/cscosine/cs-pre-commit-hooks
+    rev: v1.0.0-rc1
+    hooks:
+      - id: gersemi-cscmake
+      - id: cscmake-lint
 
   - repo: https://github.com/rhysd/actionlint
     rev: v1.7.12

@@ -26,6 +26,8 @@ specific to this repository is in `AGENTS.md`.
 - Do not run the CI matrix locally: one host build is enough; the user runs CI on GitHub.
 - Ask before anything that cannot be undone or is seen by others: deleting branches, tags or releases, force pushes,
   changing repository visibility or settings, publishing.
+- Never propose pull requests or issues to third-party (upstream) projects on your own: a fix of a fork stays a commit
+  of ours on the fork; contributing it upstream is the user's decision, case by case.
 
 ### Branches and pull requests
 
