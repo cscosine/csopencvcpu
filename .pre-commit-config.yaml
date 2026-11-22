@@ -63,7 +63,7 @@ repos:
   # CMake: gersemi lays out the CMake files (.gersemirc) with the signatures of the csCMake commands, cscmake-lint checks
   # the CMake rules of cscosine (lowercase names, a comment above every function, size limits, line length)
   - repo: https://github.com/cscosine/cs-pre-commit-hooks
-    rev: v1.0.0-rc1
+    rev: v1.0.0
     hooks:
       - id: gersemi-cscmake
       - id: cscmake-lint

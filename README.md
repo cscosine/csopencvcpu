@@ -19,7 +19,7 @@ source .venv/bin/activate     # Windows: .\.venv\Scripts\Activate.ps1
 `setup.sh` creates `.venv`, installs the project with its development tools and csorchestrator, and installs the
 pre-commit hooks.
 
-csorchestrator: `setup.sh` installs the pinned version (v0.1.0-rc2). Another one:
+csorchestrator: `setup.sh` installs the pinned version (v0.1.0). Another one:
 `./setup.sh --csorchestrator=<tag or branch>`; a local clone, editable: `./setup.sh --csorchestrator=../csorchestrator`
 (Windows: `.\setup.ps1 -CsOrchestrator <...>`).
 
