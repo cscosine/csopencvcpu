@@ -9,10 +9,12 @@ specific to this repository is in `AGENTS.md`.
 - **Outer** repositories run CI and release: the tools (csCMake, csorchestrator, csWiki), the distributions
   (third_party_base_libs, csqt6, csopencvcpu, csopencvcuda, csfoundation, csoptimization) and the applications
   (csImgTracker, csSkiTracker).
-- **Inner** repositories are built by an outer one and have no CI of their own: the first-party libraries (csCore,
-  csLie, csCamera, csVisOpenGL by csfoundation; csNelson, csBlockMatrix by csoptimization) and the forks of
+- **Inner** repositories are built by an outer one and have no build CI of their own: the first-party libraries
+  (csCore, csLie, csCamera, csVisOpenGL by csfoundation; csNelson, csBlockMatrix by csoptimization) and the forks of
   third-party libraries (by third_party_base_libs, csopencvcpu, csopencvcuda). A change in an inner repository is
   validated by its outer repository's CI.
+- Checks: every repository on the template runs `.github/workflows/checks.yml` (pre-commit on every file, every hook,
+  in the project venv) on each push and PR to `main`, inner repositories included.
 - Release chain (a change travels in this order): csorchestrator, csCMake → third_party_base_libs → csqt6,
   csopencvcpu, csopencvcuda → csfoundation → csoptimization → applications.
 - Plans and their progress: `cscosine/.github/plans/`. A commit or PR that completes a plan step names the step id
@@ -59,6 +61,9 @@ The commands for each case: [CONTRIBUTING.md](https://github.com/cscosine/.githu
 - Release: tag `vX.Y.Z` on the commit (usually the last rc), then `stable` fast-forwarded to it. The libraries and
   forks it built are tagged on the commits used (own semver; forks `-cs.N`).
 - Forks: `vX.Y.Z-cs.N` (upstream version, our patch level); our changes are commits on top of the upstream tag.
+- Versions: the first commit that changes a repository after a release bumps its version (`pyproject.toml` or
+  `project(VERSION)`), by semver (from 1.0.0 major / minor / patch = breaking / feature / fix; in 0.x minor = breaking,
+  patch = the rest); details and exceptions: CONTRIBUTING.md, "Versions".
 - Stable tags (`vX.Y.Z`, `vX.Y.Z-cs.N`) are never moved or deleted. Pre-release tags (`-rcN`, `-test…`) can be
   deleted (with their release: `gh release delete <tag> --cleanup-tag`) but never moved: a broken rc gets the next
   number.
