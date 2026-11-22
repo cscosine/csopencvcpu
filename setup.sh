@@ -14,14 +14,14 @@ Usage: ./setup.sh [--python=<interpreter>] [--csorchestrator=<tag|branch|path>]
 
   --python=<interpreter>        Python used to create .venv (default: python3 when it is 3.11 or newer, otherwise
                                   the newest of python3.14 ... python3.11 found)
-  --csorchestrator=<spec>       csorchestrator to install (default: v0.1.0-rc2, the pinned version)
+  --csorchestrator=<spec>       csorchestrator to install (default: v0.1.0, the pinned version)
                                   a tag or branch of github.com/cscosine/csorchestrator, or
                                   the path of a local clone (installed editable, e.g. ../csorchestrator)
 USAGE
 }
 
 PYTHON=""
-CSORCHESTRATOR="v0.1.0-rc2"
+CSORCHESTRATOR="v0.1.0"
 for arg in "$@"; do
   case "${arg}" in
     --python=*) PYTHON="${arg#*=}" ;;

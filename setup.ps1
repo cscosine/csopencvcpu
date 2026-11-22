@@ -5,7 +5,7 @@ param(
     # default: python when it is 3.11 or newer, otherwise the newest Python 3.14 ... 3.11 of the py launcher
     [string]$Python = "",
     # tag or branch of github.com/cscosine/csorchestrator, or the path of a local clone (installed editable)
-    [string]$CsOrchestrator = "v0.1.0-rc2"
+    [string]$CsOrchestrator = "v0.1.0"
 )
 $ErrorActionPreference = "Stop"
 

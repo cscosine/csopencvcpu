@@ -56,7 +56,7 @@ def create_orchestrator() -> OptionalOrchestratorWithReport:
     base_target_dir = Path("workspace")
     base_install_dir = base_target_dir / Path("install")
     base_libs_dir = base_target_dir / Path("libs")
-    cscmake_version = "1.0.0-rc10"
+    cscmake_version = "1.0.0"
 
     o = create_default_orchestrator(
         name="csopencvcpu",
