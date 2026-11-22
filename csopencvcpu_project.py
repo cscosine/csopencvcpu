@@ -62,7 +62,7 @@ def create_orchestrator() -> OptionalOrchestratorWithReport:
     o = create_default_orchestrator(
         name="csopencvcpu",
         # staggered weekly run (UTC), one project at a time in the build-train order (no shared runners)
-        schedule=Cron.weekly(DayOfWeek.MON, hour=2, minute=15),
+        schedule=Cron.weekly(DayOfWeek.MON, hour=2, minute=20),
         version=OPENCV_VERSION,
         base_install_dir=base_install_dir,
         populate_default_matrix=True,

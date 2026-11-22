@@ -47,6 +47,10 @@ The commands for each case: [CONTRIBUTING.md](https://github.com/cscosine/.githu
   practice, skipped when in a hurry: a one-line fix can be committed, tagged and released in one build.
 - Builds: on `main` and on tags; the weekly schedule on `main` (inner changes and runner-image changes); a feature
   branch on demand. No build for `stable` (it only receives commits already built).
+- The weekly schedule is a queue, one project at a time (no shared runners), in CET: csqt6 Sunday 21:00, the tools
+  (csCMake, csorchestrator, the template) Monday 01:00, then the build train in dependency order, the `.github`
+  ecosystem update at 08:00. A new outer project gets its own slot after the projects it depends on (`schedule=` in
+  its recipe, crons in UTC), never csorchestrator's default (Monday 03:00 UTC). The queue: ECOSYSTEM.md, Weekly queue.
 
 ### Changes across repositories
 
