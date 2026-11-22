@@ -7,7 +7,7 @@ name: csopencvcpu
     - v*.*.*
   workflow_dispatch: {}
   schedule:
-  - cron: 20 2 * * 1
+  - cron: 0 1 * * 1
 jobs:
   release-from-artifacts:
     needs: orchestrator-matrix
