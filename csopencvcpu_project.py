@@ -54,10 +54,10 @@ WINDOWS_CMAKE_PREFIX_CLEANUP_CMD = [
 def create_orchestrator() -> OptionalOrchestratorWithReport:
     report = Report()
 
-    base_target_dir = Path("workspace")
+    base_target_dir = Path("_csw")
     base_install_dir = base_target_dir / Path("install")
     base_libs_dir = base_target_dir / Path("libs")
-    cscmake_version = "1.0.0"
+    cscmake_version = "1.1.0"
 
     o = create_default_orchestrator(
         name="csopencvcpu",
