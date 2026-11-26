@@ -104,16 +104,16 @@ The core build recipe is defined in [`csopencvcpu_project.py`](csopencvcpu_proje
 
 The project version (`5.1.0`, tracking the OpenCV release being built) is defined in [`csopencvcpu_project.py`](csopencvcpu_project.py) (`OPENCV_VERSION`) and mirrored in [`pyproject.toml`](pyproject.toml) — keep the two aligned when bumping the version.
 
-Release tags follow the tag of the OpenCV fork they ship: `v<OpenCV version>-cpu.<n>` (e.g. `v5.1.0-cpu.3`, built
-from the forks' `v5.1.0-cpu.3`), release candidates `v5.1.0-cpu.3-rc<n>`. The project version stays the OpenCV
-version (`5.1.0`), the one consumers pin (`project_version`). The forks: `cscosine/opencv` and `cscosine/opencv_contrib`,
-the same layout and tags, branch `cpu` (opencv's `cscosine/README.md`).
+Release tags follow the tag of the OpenCV fork they ship: `v<OpenCV version>-cpu.<n>` (e.g. `v5.1.0-cpu.4`, built from
+the forks' `v5.1.0-cpu.4`; a rebuild on new providers gets the next fork tag), release candidates `v5.1.0-cpu.4-rc<n>`.
+The project version stays the OpenCV version (`5.1.0`), the one consumers pin (`project_version`). The forks:
+`cscosine/opencv` and `cscosine/opencv_contrib`, the same layout and tags, branch `cpu` (opencv's `cscosine/README.md`).
 
 ### Execution Phases
 
 1. **Repos Update**:
    - Downloads the csCMake release package pinned in [`csopencvcpu_project.py`](csopencvcpu_project.py) (`cscmake_version`, e.g. `1.0.0-rc8`) and unpacks it into `_csw/csCMake`, where the presets of the OpenCV fork find it (sibling layout).
-   - Shallow clones (`depth=1`) of `cscosine/opencv` and `cscosine/opencv_contrib` at the tags configured in [`csopencvcpu_project.py`](csopencvcpu_project.py) (both `v5.1.0-cpu.3`, the CPU variant of the forks).
+   - Shallow clones (`depth=1`) of `cscosine/opencv` and `cscosine/opencv_contrib` at the tags configured in [`csopencvcpu_project.py`](csopencvcpu_project.py) (both `v5.1.0-cpu.4`, the CPU variant of the forks).
 2. **Install Build Dependencies (csopencvcpu)**:
    - All environment-replication steps: Microsoft fonts EULA pre-accept, libunwind removal (Ubuntu 22.04), apt dev packages, numpy (Windows).
    - Precompiled `eigen3` downloaded from the [third_party_base_libs](https://github.com/cscosine/third_party_base_libs) provider (`ManifestGithub` + `StepGetPrecompiledLibGithub`).

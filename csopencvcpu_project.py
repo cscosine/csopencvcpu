@@ -81,8 +81,8 @@ def create_orchestrator() -> OptionalOrchestratorWithReport:
         base_target_dir=base_target_dir,
         checkout_phase_name="Repos Update",
         repo_ref_dict={
-            "opencv": f"v{OPENCV_VERSION}-cpu.3",
-            "opencv_contrib": f"v{OPENCV_VERSION}-cpu.3",
+            "opencv": f"v{OPENCV_VERSION}-cpu.4",
+            "opencv_contrib": f"v{OPENCV_VERSION}-cpu.4",
         },
         release_archive_list=[create_cscmake_release_archive(cscmake_version)],
     )
